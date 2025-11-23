@@ -3,7 +3,7 @@ name: Update Pesni JSON
 on:
   push:
     branches:
-      - main  # Если ваша ветка называется иначе, укажите ее
+      - main  # Укажите вашу ветку
 
 jobs:
   update_json:
@@ -12,13 +12,24 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Make sure pesni.json exists
+        run: |
+          # Проверяем, существует ли файл и если нужно, обновляем его
+          if [ ! -f pesni.json ]; then
+            echo '{"example": "data"}' > pesni.json  # Это просто пример, замените на реальную логику
+          fi
+
       - name: Commit and push the updated pesni.json
         run: |
-          # Если вам нужно изменить файл pesni.json перед пушем, вы можете добавить это здесь.
-          # Например, можно применить скрипт для его модификации или перезаписи
-
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
-          git add pesni.json
-          git commit -m "Update pesni.json"
-          git push
+          
+          # Проверка на изменения в файле
+          git diff --exit-code pesni.json
+          if [ $? -eq 1 ]; then
+            git add pesni.json
+            git commit -m "Update pesni.json"
+            git push
+          else
+            echo "No changes to commit"
+          fi
