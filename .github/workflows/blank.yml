@@ -12,24 +12,23 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Make sure pesni.json exists
+      - name: Make sure pesni.json exists and update it if necessary
         run: |
           # Проверяем, существует ли файл и если нужно, обновляем его
           if [ ! -f pesni.json ]; then
-            echo '{"example": "data"}' > pesni.json  # Это просто пример, замените на реальную логику
+            echo '{"example": "data"}' > pesni.json  # Пример создания файла
+          else
+            # Здесь вы можете добавить логику для изменения pesni.json, если это нужно
+            # Например, добавить новую строку в JSON или обновить существующие данные
+            echo '{"example": "updated data"}' > pesni.json
           fi
 
       - name: Commit and push the updated pesni.json
         run: |
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
-          
-          # Проверка на изменения в файле
-          git diff --exit-code pesni.json
-          if [ $? -eq 1 ]; then
-            git add pesni.json
-            git commit -m "Update pesni.json"
-            git push
-          else
-            echo "No changes to commit"
-          fi
+
+          # Пушим изменения в репозиторий
+          git add pesni.json
+          git diff --cached --exit-code || git commit -m "Update pesni.json"
+          git push
