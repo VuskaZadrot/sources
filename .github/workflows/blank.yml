@@ -1,0 +1,29 @@
+name: Update JSON File
+
+on:
+  push:
+    branches:
+      - main  # или любая другая ветка
+
+jobs:
+  update-json:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout the repository
+      uses: actions/checkout@v2
+
+    - name: Update JSON file
+      run: |
+        # Вставьте команду для обновления JSON
+        echo '{"key": "new value"}' > pesni.json  # Обновите JSON с необходимыми данными
+
+    - name: Commit and push the changes
+      run: |
+        git config user.name "GitHub Actions"
+        git config user.email "github-actions@github.com"
+        git add pesni.json
+        git commit -m "Update JSON file"
+        git push https://github.com/${{ secrets.GITHUB_ACTOR }}:${{ secrets.PERSONAL_ACCESS_TOKEN }}@github.com/YOUR_USERNAME/YOUR_REPOSITORY.git main
+      env:
+        GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}  # Используем ваш персональный токен для аутентификации
