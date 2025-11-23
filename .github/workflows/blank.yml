@@ -28,7 +28,9 @@ jobs:
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
 
-          # Пушим изменения в репозиторий
+          # Пушим изменения в репозиторий с использованием GITHUB_TOKEN
           git add pesni.json
           git diff --cached --exit-code || git commit -m "Update pesni.json"
-          git push
+          
+          # Используем GITHUB_TOKEN для аутентификации
+          git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/VuskaZadrot/sources.git HEAD:main
