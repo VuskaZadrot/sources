@@ -3,7 +3,7 @@ name: Update pesni.json
 on:
   push:
     branches:
-      - main  # Это будет срабатывать при пуше в ветку 'main'
+      - main
 
 jobs:
   update-json:
@@ -27,4 +27,4 @@ jobs:
         git commit -m "Update pesni.json"
         git push https://github.com/VuskaZadrot/sources.git main
       env:
-        GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}  # Используем персональный токен GitHub для авторизации
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
