@@ -1,9 +1,9 @@
-name: Update JSON File
+name: Update pesni.json
 
 on:
   push:
     branches:
-      - main  # или любая другая ветка
+      - main  # Это будет срабатывать при пуше в ветку 'main'
 
 jobs:
   update-json:
@@ -13,17 +13,18 @@ jobs:
     - name: Checkout the repository
       uses: actions/checkout@v2
 
-    - name: Update JSON file
+    - name: Update pesni.json content
       run: |
-        # Вставьте команду для обновления JSON
-        echo '{"key": "new value"}' > pesni.json  # Обновите JSON с необходимыми данными
+        # Пример обновления содержимого JSON.
+        # Здесь просто перезаписываем файл 'pesni.json' с новыми данными.
+        echo '{"new_key": "new_value"}' > pesni.json  # Замените на логику обновления вашего JSON
 
     - name: Commit and push the changes
       run: |
         git config user.name "GitHub Actions"
         git config user.email "github-actions@github.com"
         git add pesni.json
-        git commit -m "Update JSON file"
-        git push https://github.com/${{ secrets.GITHUB_ACTOR }}:${{ secrets.PERSONAL_ACCESS_TOKEN }}@github.com/YOUR_USERNAME/YOUR_REPOSITORY.git main
+        git commit -m "Update pesni.json"
+        git push https://github.com/${{ secrets.GITHUB_ACTOR }}:${{ secrets.PERSONAL_ACCESS_TOKEN }}@github.com/VuskaZadrot/sources.git main
       env:
-        GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}  # Используем ваш персональный токен для аутентификации
+        GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}  # Используем персональный токен GitHub для авторизации
