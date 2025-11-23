@@ -33,4 +33,4 @@ jobs:
           git diff --cached --exit-code || git commit -m "Update pesni.json"
           
           # Используем GITHUB_TOKEN для аутентификации
-          git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/VuskaZadrot/sources.git HEAD:main
+          git push https://x-access-token:${{ secrets.MY_GITHUB_TOKEN }}@github.com/VuskaZadrot/sources.git HEAD:main
